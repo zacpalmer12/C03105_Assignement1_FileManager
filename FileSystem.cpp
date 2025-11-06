@@ -1,22 +1,40 @@
 #include "FileSystem.h"
 
 Node::Node(const string& name, bool isDir, Node* parent, Node* leftmostChild, Node* rightSibling) {
+	name_ = name;
+	isDir_ = isDir;
+	parent_ = parent;
+	leftmostChild_ = leftmostChild;
+	rightSibling_ = rightSibling;
 	// IMPLEMENT ME
 
 }
 
 Node::~Node() {
+	Node* child = leftmostChild_;
+	while (child != nullptr) {
+		Node* nextSibling = child->rightSibling_;
+		delete child;
+		child = nextSibling;
+	}
 	// IMPLEMENT ME
 
 }
 
 Node* Node::leftSibling() const {
+	if (!parent_ || parent_->leftmostChild_ == this) {
+		return nullptr;
+	}
+	Node* sibling = parent_->leftmostChild_;
+	while (sibling_ > rightSibling_ != this) {
+		sibling = sibling->rightSibling_;
+	}
+	return sibling;
 	// IMPLEMENT ME
-
-	return nullptr; // dummy
 }
 
 FileSystem::FileSystem() {
+	curr_ = root_ = new Node("", true);
 	// IMPLEMENT ME
 
 }
@@ -77,11 +95,14 @@ FileSystem::FileSystem(const string& testinput) {
 }
 
 FileSystem::~FileSystem() {
+	delete root_;
 	// IMPLEMENT ME
 
 }
 
 string FileSystem::cd(const string& path) {
+
+
 	// IMPLEMENT ME
 
 	return ""; // dummy
@@ -105,12 +126,14 @@ string FileSystem::ls() const {
 }
 
 string FileSystem::pwd() const {
+
 	// IMPLEMENT ME
 
 	return ""; // dummy
 }
 
 string FileSystem::tree() const {
+
 	// IMPLEMENT ME
 
 	return ""; // dummy
